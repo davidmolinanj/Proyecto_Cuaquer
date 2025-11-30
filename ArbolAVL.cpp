@@ -9,7 +9,7 @@ using namespace std;
 //tabla hash y se cree así el árbol
  
 //TODO: Hay que hacer un getAltura xq sino el código cuando el nodo no tiene hijos peta (chati)
-
+//HOLA HOLA PROBANDO PROBANDO
 
 void ArbolAVL::RSI(Nodo *&nodo){
     Nodo *nodoB = nodo->hijoizq;
