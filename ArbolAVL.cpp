@@ -163,39 +163,3 @@ int ArbolAVL::date(Nodo *nodo, Fecha fearly, Fecha flate, int &contador){
 
 
 
-/*
-int LAST(tope, contador = 0) <-- tiene que buscar los nodos.
-    //quizá meter un contador para saber cuántas veces tenemos que imprimir nodos estaría bien. Last n nos lo da. De un while
-    
-    si cont >= tope
-        return contador         
-
-    Si tiene Derecha -> der.last()
-       (Vuelve de la derecha)
-    
-    IMPRIME EL NODO ACTUAL (Sin preguntar nada más)
-    cont++
-
-    Si tiene Izquierda -> Ve a la Izquierda
-    (Vuelve de la Izquierda)
-    return contador
-    
-    
-*/
-
-/*
-    nodo.date(fmin, fmax){
-
-    //Caso1: actual.fecha es menor 
-    Si (hijoder) Y (nodo->fecha < F_max) -> hijoder.date(F_min, F_max)
-
-    //Caso2: actual.fecha está entre fmin y fmax
-    Si (nodo->fecha >= F_min) Y (nodo->fecha <= F_max) -> nodo.imprime()
-
-    //Caso3: tengo que comprobar la izquierda, sii mi fecha es mayor que fmin
-    Si (hijoizq) Y (nodo->fecha > F_min) -> hijoizq.date(F_min, F_max)
-
-    return
-
-    }
-*/
