@@ -8,34 +8,45 @@
 
 class ArbolAVL{
 
+    friend class DiccionarioCuacs;
+
     private:
     Nodo *raiz;
 
     public:
 
-    ArbolAVL();     //es vital hacer el constructor del árbol (que empezaría vacío)
-    ~ArbolAVL();
+    ArbolAVL();
+
+    ~ArbolAVL(){
+        raiz->~Nodo();
+    }
+
     //RSI, RSD, RDI, RDD
-    void insertar(Cuac *clave); //#TODO
     //void eliminar(Nodo *&nodo);
-    void comprobarGiroMagistral(Nodo *nodo);
-
-    int getAltura(Nodo *nodo); //#TODO
-    int balance(Nodo *nodo);
-
-    void RSI(Nodo *&nodo);
-    void RSD(Nodo *&nodo);  //#TODO
-    void RDI(Nodo *&nodo);  //#TODO
-    void RDD(Nodo *&nodo);  //#TODO
+    void insertar(Cuac *c) {
+        insertar(this->raiz, c);
+     }
+    void insertar(Nodo *&nodo, Cuac *c);
     
-    void last(int n);       //#TODO: pasar a c++
-    void date(Fecha f1, Fecha f2);  //#TODO:pasar a c++
+    void comprobarGiroMagistral(Nodo *&nodo);
+
+    int getAltura(Nodo *nodo); //HECHO
+    int balance(Nodo *nodo);    //HECHO
+
+    void RSI(Nodo *&nodo);  //HECHO
+    void RSD(Nodo *&nodo);  //HECHO
+    void RDI(Nodo *&nodo);  //HECHO
+    void RDD(Nodo *&nodo);  //HECHO
+    
+    void last(Nodo *nodo, int n, int &contador);       //HECHO
+    int date(Nodo *nodo, Fecha f1, Fecha f2, int &contador);  //HECHO
 
     
 
 
 
 };
+
 
 
 

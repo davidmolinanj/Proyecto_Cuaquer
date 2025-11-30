@@ -5,50 +5,162 @@ using namespace std;
 
 
 
-//#TODO: habrá que hacer que cuando se crear un nodo en la tabla hash, el nodo apunte a la dirección de la 
-//tabla hash y se cree así el árbol
+/*TODO: habrá que hacer que cuando se crear un nodo en la tabla hash, el nodo apunte a la dirección de la 
+tabla hash y se cree así el árbol*/
  
-//TODO: Hay que hacer un getAltura xq sino el código cuando el nodo no tiene hijos peta (chati)
-//HOLA HOLA PROBANDO PROBANDO
+
+int ArbolAVL::getAltura(Nodo *nodo){
+    if(nodo == nullptr){ 
+        return -1;
+    }
+    return nodo->altura;
+} 
+
+void ArbolAVL::insertar(Nodo *&nodo, Cuac *c){
+    if(nodo == nullptr){ //raiz
+        nodo->clave = c;
+        /*nodo->hijoder = nullptr;
+        nodo->hijoizq = nullptr;<
+        nodo->altura = 0;*/
+        //creo que esa cosa lo hace ya nuestro constructor.
+        return;
+    }
+    
+    else if(c->devolver_fecha().es_menor(nodo->clave->devolver_fecha())){
+        insertar(nodo->hijoizq, c);
+    }
+
+    else if(c->devolver_fecha().es_mayor(nodo->clave->devolver_fecha())){
+        insertar(nodo->hijoder, c);
+    }
+
+    else{
+        return; //si ocurre esto, la hemos cagado fuerte
+    }
+
+    nodo->altura = 1 + max(getAltura(nodo->hijoizq),getAltura(nodo->hijoder));
+    comprobarGiroMagistral(nodo);   //Comprueba si hay que hacer una rotación
+}
+
+
+
+
+
 
 void ArbolAVL::RSI(Nodo *&nodo){
+    if(nodo == nullptr || nodo->hijoizq == nullptr){
+        return;
+    }   //esto lo pongo por si acaso el comprobarGiro funciona como el culo.
+
     Nodo *nodoB = nodo->hijoizq;
     nodo->hijoizq = nodoB->hijoder;
     nodoB->hijoder = nodo;
-    nodo->altura = 1 + max((nodo->hijoizq->altura),(nodo->hijoder->altura));
-    nodoB->altura = 1 + max((nodoB->hijoizq->altura),(nodo->altura));
+    nodo->altura  = 1 + max(getAltura(nodo->hijoizq), getAltura(nodo->hijoder));    //He usado el getAltura
+    nodoB->altura = 1 + max(getAltura(nodoB->hijoizq), getAltura(nodoB->hijoder));
     nodo = nodoB;
-}
+}   
 
-//aplico RSD(A)
 void ArbolAVL::RSD(Nodo *&nodo){ //nodo = A y nodo->hijoder = B
+    if(nodo == nullptr || nodo->hijoder == nullptr){
+        return;
+    }   //esto lo pongo por si acaso el comprobarGiro funciona como el culo.
+
     Nodo *nodoB = nodo->hijoder;
     nodo->hijoder = nodoB->hijoizq;
     nodoB->hijoizq = nodo;
-    nodo->altura = 1 + max((nodo->hijoizq->altura),(nodo->hijoder->altura));
-    nodoB->altura = 1 + max((nodoB->hijoizq->altura),(nodo->altura));
+    nodo->altura = 1 + max(getAltura(nodo->hijoizq), getAltura(nodo->hijoder));
+    nodoB->altura = 1 + max(getAltura(nodoB->hijoizq), getAltura(nodoB->hijoder));
     nodo = nodoB;
 }
 
-int ArbolAVL::balance(Nodo *nodo){  //no entiendo muy bien que hace ni para que queremos esto
-    return (abs(nodo->hijoder->altura + nodo->hijoizq->altura));
+void ArbolAVL::RDI(Nodo *&nodo){
+    RSD(nodo->hijoizq);
+    RSI(nodo);
 }
 
-void ArbolAVL::comprobarGiroMagistral(Nodo *nodo){
-    //altura inicia en -1, para ir mirando los niveles y eso.
+void ArbolAVL::RDD(Nodo *&nodo){
+    RSI(nodo->hijoder);
+    RSD(nodo);
+}
+
+int ArbolAVL::balance(Nodo *nodo){
+    if(nodo == nullptr){
+        return -1;
+    }  
+    return (getAltura(nodo->hijoizq) - getAltura(nodo->hijoder));
+}   
+
+void ArbolAVL::comprobarGiroMagistral(Nodo *&nodo){
     if(balance(nodo) > 1 && balance(nodo->hijoizq) >= 0){
         RSI(nodo);
     }
-    if(balance(nodo) > 1 && balance(nodo->hijoizq) < 0){
+    else if(balance(nodo) > 1 && balance(nodo->hijoizq) < 0){
         RDI(nodo);
     }
-    if(balance(nodo) < -1 && balance(nodo->hijoizq) > 0){
+    else if(balance(nodo) < -1 && balance(nodo->hijoder) > 0){
         RDD(nodo);
     }
-    if(balance(nodo) < -1 && balance(nodo->hijoizq) <= 0){
-        RSD(nodo);
-    }
+    else if(balance(nodo) < -1 && balance(nodo->hijoder) <= 0){
+        RSD(nodo); 
+    }   
 }
+/*  1 balance(A) > 1 y balance(A.izq) ≥ 0 → RSI(A)
+    2 balance(A) > 1 y balance(A.izq) < 0 → RDI(A)
+    3 balance(A) < −1 y balance(A.der) > 0 → RDD(A)
+    4 balance(A) < −1 y balance(A.der) ≤ 0 → RSD(A)*/
+
+
+void ArbolAVL::last(Nodo *nodo, int tope, int &cont){   //NOS FALTAN MOVIDAS
+    if (cont >= tope) {
+        return ;
+    }
+
+    if(nodo->hijoder != nullptr){
+        last(nodo->hijoder, tope, cont);
+    }
+
+    if(cont >= tope){
+        return;
+    }
+
+    nodo->clave->escribir();
+    cont++;
+    
+    if(nodo->hijoizq != nullptr){
+        last(nodo->hijoizq, tope, cont);
+    }
+    
+    return;
+}
+
+
+
+int ArbolAVL::date(Nodo *nodo, Fecha fearly, Fecha flate, int &contador){
+    //es_mayor = ha ocurrido antes que; es_menor: ha ocurrido despues de.
+    if(nodo == nullptr){
+        return;
+    }
+
+    Fecha actual = nodo->clave->devolver_fecha();
+    
+    //Tengo nodo derecho
+    if(nodo->hijoder != nullptr && actual.es_menor(fearly)){
+        date(nodo->hijoder, fearly, flate, contador);
+    }
+    
+    //Estoy en el rango?
+    if((actual.es_menor(fearly) || actual.es_igual(fearly)) && (actual.es_mayor(flate) || actual.es_igual(flate))){   //f1 <= actual <= f2
+        contador++;                                         //f1 == actual <= f2 si se supone que f1 > f2 ò f1== f2
+        cout<<contador<<". ";
+        nodo->clave->escribir();
+    }
+    
+    if(nodo->hijoizq != nullptr && actual.es_mayor(fearly)){
+        date(nodo->hijoizq, fearly, flate, contador);
+    } 
+    return contador;
+}
+
 
 
 /*

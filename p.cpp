@@ -29,7 +29,7 @@ void interprete(string comando){
             int numero;
             cin >> numero;
             cout << comando << " " << numero << endl;
-            //300
+            Dict.last(numero);
         }
 
         else if (comando=="date"){
@@ -42,7 +42,7 @@ void interprete(string comando){
             cout << " ";
             fecha2.mostrar();
             cout << endl;
-            //300
+            Dict.date(fecha1,fecha2);
         }
 
         else if (comando=="tag"){
@@ -67,6 +67,9 @@ int main (void) {
    while (cin >> comando && comando != "exit"){
       interprete(comando);
    }
-   //pongo un comentario pq estoy probando a actualizar todos los ficheros
-      return 0;
+
+   Dict.getArbol().~ArbolAVL();
+   Dict.getTablaHash().~TablaHash();
+   return 0;
+      
 }

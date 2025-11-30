@@ -3,6 +3,8 @@
 #include <list>
 #include "DiccionarioCuacs.h"
 #include "cuac.h"
+#include "ArbolAVL.h"
+#include "Nodo.h"
 
 class TablaHash{
 
@@ -36,7 +38,7 @@ class TablaHash{
         delete[] tabla;
     };
 
-    void insertar(Cuac nuevo);  //inserta un nuevo cuac en la tabla
+    Cuac *insertar(Cuac nuevo);  //inserta un nuevo cuac en la tabla
     
     /*void expandir();*/
 

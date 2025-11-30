@@ -22,7 +22,7 @@ class Nodo{
         clave = nullptr;
         hijoizq = nullptr;
         hijoder = nullptr;
-        altura = 0; //esto se supone que se inicializa en 0        
+        altura = 0;      
     }
 
     ~Nodo(){
@@ -34,8 +34,6 @@ class Nodo{
         }*/
         delete hijoder;
         delete hijoizq;
-        //delete clave; no se debe borrar la clave porque ya se encarga la tabla hash, solo se borra la estructura 
-        //del arbol   
     }
 
     
