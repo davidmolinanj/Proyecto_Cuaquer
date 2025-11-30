@@ -27,7 +27,4 @@ class Cuac {
 
 //pongo un comentario pq estoy probando a actualizar todos los ficheros
 
-
-//SEEEEEEEEEEEEEEEEEEEEEEEEEEE
-//SEEEEEEEEEEEEEEEEEEEEE
 #endif
