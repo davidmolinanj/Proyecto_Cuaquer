@@ -5,10 +5,10 @@ using namespace std;
 
 
 
-#TODO: habrá que hacer que cuando se crear un nodo en la tabla hash, el nodo apunte a la dirección de la 
-tabla hash y se cree así el árbol
+//#TODO: habrá que hacer que cuando se crear un nodo en la tabla hash, el nodo apunte a la dirección de la 
+//tabla hash y se cree así el árbol
  
-#TODO: Hay que hacer un getAltura xq sino el código cuando el nodo no tiene hijos peta (chati)
+//TODO: Hay que hacer un getAltura xq sino el código cuando el nodo no tiene hijos peta (chati)
 
 
 void ArbolAVL::RSI(Nodo *&nodo){
